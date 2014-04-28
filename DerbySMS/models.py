@@ -31,6 +31,14 @@ class Horse(db.Model):
     name = db.Column(db.String(500))
     shortname = db.Column(db.String(10))
     lane = db.Column(db.Integer, unique=True)
+    
+    @classmethod
+    def find_by_lane(cls, lane):
+        return Horse.query.filter(Horse.lane == lane).first()
+        
+    @classmethod
+    def find_by_nickname(cls, nname):
+        return Horse.query.filter(Horse.shortname == nname).first()
             
 class Bet(db.Model):
     __tablename__ = 'bet_history'
