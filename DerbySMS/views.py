@@ -11,7 +11,10 @@ def inbound_sms():
     Respond to SMS
     """
     
-    message = sms.process_sms(r=request)
+    if request.method == "POST":
+        message = sms.process_sms(r=request)
+    else:
+        message = "Sorry, but HTTP {0} is not currently allowed.".format(request.method)
     
     resp = twilio.twiml.Response()
     resp.message(message)
