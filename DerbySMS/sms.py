@@ -1,6 +1,7 @@
 from models import *
 from DerbySMS import db
 from horse import *
+import re
 
 def process_sms(r):
     from_number = str(r.values.get('From', None))
@@ -38,7 +39,7 @@ def bet(person, txt):
         if not horse:
             return "Unknown horse {0}".format(horse_shortname)
         
-        high_bet = Bet.query.filter_by(horse=horse.id).order_by(Bet.amount.desc()).first()
+        high_bet = Bet.query.filter(Bet.horse == horse.id).order_by(Bet.amount.desc()).first()
         
         if not high_bet:
             high_bet = Bet(person=person.id, horse=horse.id, amount=0)
@@ -71,7 +72,55 @@ def intro(person, txt):
         return "Please try again with `name firstname lastname`\nBoth firstname and lastname are required."
         
 def status(person, txt):
-    return "Got status command"
+    word = " ".join(txt)
+    bets_by_horse = {}
+    bets_by_person = {}
+    horse_names = []
+
+    # Get the current high bet for every horse        
+    for h in Horse.query.all():
+        horse_names.append(h.shortname)
+        
+        b = Bet.query.filter(Bet.horse == h.id).order_by(Bet.id.desc()).first()
+        if not b:
+            # If there is no bet, then it means that this horse has no bets on it
+            continue
+        p = Person.query.filter(Person.id == b.person).first()
+        
+        bets_by_horse[h.shortname] = [h, b, p]
+        
+        if p.id in bets_by_person:                    
+            bets_by_person[p.id].append([h, b, p])
+        else:
+            bets_by_person[p.id] = [[h, b, p]]
+    
+    if (not txt) or word.lower() == 'me':
+        # Return a list of all of the bets & horses this person for whom this person holds the top bet
+        #return "Status by person"
+        if person.id in bets_by_person:
+            #return str(bets_by_person[person.id])
+            message = "You are currently the high bettor with "
+            for l in bets_by_person[person.id]:
+                #l should be a list
+                tmp_horse = l[0]
+                tmp_bet = l[1]
+                message += "\n{0} for {1}".format(tmp_bet.amount, tmp_horse.name)
+            return message
+        else:
+            return "You are not currently the high bettor for any horses"
+        
+    elif word in horse_names:
+        if word in bets_by_horse:
+            hname = bets_by_horse[word][0].name
+            bamount = bets_by_horse[word][1].amount
+            fname = bets_by_horse[word][2].firstname
+            lname = bets_by_horse[word][2].lastname
+            
+            return "{0} {1} has ${2} on {3}".format(fname, lname, bamount, hname)
+        else:
+            return "No one has submitted any bets for {0}".format(word)
+    else:
+        return "I don't know what {0} is".format(word) 
     
 def horse(person, txt):
     try:
