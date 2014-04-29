@@ -19,7 +19,7 @@ class Person(db.Model):
         self.mobile = mobile
         
     def __repr__(self):
-        return "<User('%s','%s','%s','%s)>" % (self.id,self.firstname, self.lastname, self.mobile)
+        return "<Person ('%s','%s','%s','%s)>" % (self.id,self.firstname, self.lastname, self.mobile)
         
     @classmethod
     def find_by_mobile(cls, mobile):
@@ -31,6 +31,9 @@ class Horse(db.Model):
     name = db.Column(db.String(500))
     shortname = db.Column(db.String(10))
     lane = db.Column(db.Integer, unique=True)
+    
+    def __repr__(self):
+        return "<Horse ('%s','%s','%s')>" % (self.id, self.name, self.shortname)
     
     @classmethod
     def find_by_lane(cls, lane):
@@ -47,6 +50,9 @@ class Bet(db.Model):
     horse = db.Column(db.Integer, db.ForeignKey(Horse.id))
     amount = db.Column(db.Integer)
     created = db.Column(db.DateTime, default=datetime.datetime.now)
+    
+    def __repr__(self):
+        return "<Bet ('%s', '%s', '%s', '%s')>" % (self.id, self.amount, self.person, self.horse)
     
     @property
     def created_in_words(self):
