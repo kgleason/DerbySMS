@@ -32,6 +32,9 @@ def process_sms(r):
         
 def bet(person, txt):
     try:
+        if not betting_running():
+            return "I'm sorry. Betting is currently disabled."
+            
         shortname = txt[0].lower()
         bet_amount = txt[1]
         horse = Horse.find_by_nickname(shortname)
@@ -147,3 +150,13 @@ def horse(person, txt):
     
     except IndexError, e:
         return "Please try again with a properly formatted command."
+        
+def betting_running():
+    status = BettingStatus.query.filter(BettingStatus.id == 1).first()
+    
+    if not status:
+        status = BettingStatus(running=False)
+        db.session.add(status)
+        db.session.commit()
+        
+    return status.running

@@ -57,3 +57,11 @@ class Bet(db.Model):
     @property
     def created_in_words(self):
         return time_ago_in_words(self.created)
+        
+class BettingStatus(db.Model):
+    __tablename__ = 'betting_status'
+    id = db.Column(db.Integer, primary_key=True)
+    running = db.Column(db.Boolean, default=False)
+    
+    def __repr__(self):
+        return "<Running ('%s')>" % (self.running)
