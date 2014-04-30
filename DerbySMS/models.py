@@ -65,3 +65,9 @@ class BettingStatus(db.Model):
     
     def __repr__(self):
         return "<Running ('%s')>" % (self.running)
+        
+class TwilioConfig(db.Model):
+    __tablename__ = 'twilio_config'
+    id = db.Column(db.Integer, primary_key=True)
+    account_sid = db.Column(db.String(200))
+    auth_token = db.Column(db.String(200))

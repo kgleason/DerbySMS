@@ -2,6 +2,7 @@ from models import *
 from DerbySMS import db
 from horse import *
 import re
+from twilio.rest import TwilioRestClient
 
 def process_sms(r):
     from_number = str(r.values.get('From', None))
@@ -14,6 +15,8 @@ def process_sms(r):
         person = Person(mobile=from_number)
         db.session.add(person)
         db.session.commit()
+        
+        send_sms(person, "Reply with 'name firstname lastname' to associate your name with your mobile number.")
     
     text = r.values.get('Body', None)
     words = text.split()
@@ -185,3 +188,13 @@ def change_betting_status(person, txt):
         db.session.add(status)
         db.session.commit()
         return "The betting has been turned {0}".format(txt[0])
+        
+def send_sms(person, message):
+    tc = TwilioConfig.query.filter(TwilioConfig.id == 1).first
+    
+    if not tc:
+        raise Exception("Error reading Twilio config from the database")
+    
+    client = TwilioRestClient(tc.account_sid, tc.auth_token) 
+    
+    output = client.messages.create(to=person.mobile, from_="+18125585422",body=message)   
