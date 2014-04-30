@@ -23,6 +23,7 @@ def process_sms(r):
         "name" : intro,
         "status" : status,
         "horse" : horse,
+        "turn" : change_betting_status,
     }
     
     try:
@@ -40,7 +41,7 @@ def bet(person, txt):
         horse = Horse.find_by_nickname(shortname)
     
         if not horse:
-            return "Unknown horse {0}".format(horse_shortname)
+            return "Unknown horse {0}".format(shortname)
         
         high_bet = Bet.query.filter(Bet.horse == horse.id).order_by(Bet.amount.desc()).first()
         
@@ -160,3 +161,27 @@ def betting_running():
         db.session.commit()
         
     return status.running
+    
+def change_betting_status(person, txt):
+    if txt[0].lower() == "on":
+        on = True
+    elif txt[0].lower() == "off":
+        on = False
+    else:
+        return "Not sure what to do with {0}".format(txt[0])
+        
+    status = BettingStatus.query.filter(BettingStatus.id == 1).first()
+    
+    if not status:
+        status = BettingStatus(running=on)
+        db.session.add(status)
+        db.session.commit()
+        return "The betting has been turned {0}".format(txt[0])
+        
+    if status.running == on:
+        return "The betting is already {0}".format(txt[0])
+    else:
+        status.running = on
+        db.session.add(status)
+        db.session.commit()
+        return "The betting has been turned {0}".format(txt[0])
