@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h1>Horses Running</h1>
+	<hr/>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Horse</th>
+				<th>Shortname</th>
+				<th>Lane</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for horse in horses %}
+			<tr>
+				<th>{{ horse.name }}</th>
+				<th>{{ horse.shortname }}</th>
+				<th>{{ horse.lane }}</th>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
