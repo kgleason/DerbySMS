@@ -131,6 +131,8 @@ def status(person, txt):
         return "I don't know what {0} is".format(word) 
     
 def horse(person, txt):
+    if Person.is_admin(person.id) == False:
+        return "You must be an administrator to change the horses."
     try:
         command = txt[0].lower()    
         if command == 'add':
@@ -191,7 +193,7 @@ def change_betting_status(person, txt):
         return "The betting has been turned {0}".format(txt[0])
         
 def send_sms(person, message):
-    tc = TwilioConfig.query.filter(TwilioConfig.id == 1).first
+    tc = TwilioConfig.query.filter(TwilioConfig.id == 1).first()
     
     if not tc:
         raise Exception("Error reading Twilio config from the database")

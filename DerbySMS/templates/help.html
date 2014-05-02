@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h3>Gamblers</h3>
+	<hr/>
+	<em><strong>Here is a list of commands that you can text in order to play along.</br>
+	Where you see words like {firstname}, you should put in a value for firstname, and drop the {}</br></br></strong></em>
+	
+	<ul>
+		<li>Set your name: name {firstname} {lastname}</li>
+		<li>Place a bet: bet {shortname} {amount}  (for example "bet h1 20")</li>
+		<li>Get your status: status</li>
+		<li>Get the status of a horse: status {shortname} </li>
+	</ul>
+	
+{% endblock %}

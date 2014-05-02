@@ -11,7 +11,6 @@ class Person(db.Model):
     firstname = db.Column(db.String(100), nullable=True)
     lastname = db.Column(db.String(100), nullable=True)
     mobile = db.Column(db.String(12), unique=True)
-    isAdmin = db.Column(db.Boolean, default=False)
     
     def __init__(self, mobile, firstname=None, lastname=None):
         self.firstname = firstname
@@ -28,7 +27,20 @@ class Person(db.Model):
     @classmethod
     def find_by_mobile(cls, mobile):
         return Person.query.filter(Person.mobile == mobile).first()
+    
+    @classmethod
+    def is_admin(cls, id):
+        a = Admin.query.filter(Admin.mobile == Person.mobile).filter(Person.id == id)
+        if a:
+            return True
+        else:
+            return False    
             
+class Admin(db.Model):
+    __tablename__ = 'admins'
+    id = db.Column(db.Integer, primary_key=True)
+    mobile = db.Column(db.String(12), db.ForeignKey(Person.mobile))
+    
 class Horse(db.Model):
     __tablename__ = 'horse'
     id = db.Column(db.Integer, primary_key=True)

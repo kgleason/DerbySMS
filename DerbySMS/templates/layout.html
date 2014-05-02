@@ -3,7 +3,8 @@
 <head>
 	<title>Derby Party</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"/>
+	<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"/>-->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/refresh.js') }}"></script>
 </head>
 <body>
 	<div class="container">
@@ -15,6 +16,7 @@
 								<li><a href="{{ url_for('index') }}">Current Bets</a></li>
 								<li><a href="{{ url_for('horses') }}">Horses</a></li>
 								<li><a href="{{ url_for('people') }}">Gamblers</a></li>
+								<li><a href="{{ url_for('help') }}">Help</a></li>
 		               	 	</ul>
 		           	</div>
 		         </div>
@@ -23,7 +25,7 @@
 		<div class="container">
 		      <div class="blog-header">
 		        <h1 class="blog-title">Derby Party!!</h1>
-		        <p class="lead blog-description">Place a bet by finding your <a href="{{ url_for('horses') }}">horse's shortname</a> and texting 'bet shortname amount' to XXX-XXX-XXXX</p>
+		        <p class="lead blog-description">Place a bet by finding your <a href="{{ url_for('horses') }}">horse's shortname</a> and texting 'bet shortname amount' to 812-558-5422</p>
 		      </div>
 		  </div>
 		{% block content %}

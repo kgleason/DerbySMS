@@ -23,14 +23,14 @@ def index():
                 "horse" : h.name,
                 "person" : display_name,
                 "amount" : b.amount,
-                "ago" : b.created_in_words})
+                "ago" : "{0} ago".format(b.created_in_words)})
         else:
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
                 "person" : "No one",
                 "amount" : "0",
-                "ago" : ""})
+                "ago" : "Never"})
             
     return render_template('index.html', bets=cur_bets)
     
@@ -60,6 +60,9 @@ def horses():
 def people():
     return render_template('people.html', people=Person.all())
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
 @app.route('/horse/<int:id>')
 def horse(id):
     horse = Horse.query.filter(Horse.id == id).first()
