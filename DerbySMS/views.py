@@ -47,13 +47,13 @@ def inbound_sms():
     resp.message(message)
     return str(resp)
     
-@app.route('/horse')
+@app.route('/horses')
 def horse():
     h = Horse.all()
-    return render_template('horse.html', horses=h)
-@app.route('/person')
+    return render_template('horses.html', horses=h)
+@app.route('/people')
 def person():
-    return render_template('person.html', people=Person.all())
+    return render_template('people.html', people=Person.all())
 @app.errorhandler(404)
 def HTTPNotFound(e):
     return render_template('error.html'), 404
