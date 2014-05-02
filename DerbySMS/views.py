@@ -48,11 +48,11 @@ def inbound_sms():
     return str(resp)
     
 @app.route('/horses')
-def horse():
+def horses():
     h = Horse.all()
     return render_template('horses.html', horses=h)
 @app.route('/people')
-def person():
+def people():
     return render_template('people.html', people=Person.all())
 @app.errorhandler(404)
 def HTTPNotFound(e):
