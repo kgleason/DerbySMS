@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h1>Gamblers</h1>
+	<hr/>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Mobile</th>
+				<th>Firstname</th>
+				<th>Lastname</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for person in people %}
+			<tr>
+				<th>{{ person.mobile }}</th>
+				<th>{{ person.firstname }}</th>
+				<th>{{ person.lastname }}</th>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

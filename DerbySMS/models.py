@@ -20,7 +20,11 @@ class Person(db.Model):
         
     def __repr__(self):
         return "<Person ('%s','%s','%s','%s)>" % (self.id,self.firstname, self.lastname, self.mobile)
-        
+    
+    @classmethod
+    def all(cls):
+        return Person.query.order_by(Person.lastname, Person.firstname).all()
+            
     @classmethod
     def find_by_mobile(cls, mobile):
         return Person.query.filter(Person.mobile == mobile).first()
@@ -38,6 +42,7 @@ class Horse(db.Model):
     @classmethod
     def all(cls):
         return Horse.query.order_by(Horse.lane).all()
+        
     @classmethod
     def find_by_lane(cls, lane):
         return Horse.query.filter(Horse.lane == lane).first()

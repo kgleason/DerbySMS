@@ -53,7 +53,7 @@ def horse():
     return render_template('horse.html', horses=h)
 @app.route('/person')
 def person():
-    pass
+    return render_template('person.html', people=Person.all())
 @app.errorhandler(404)
 def HTTPNotFound(e):
     return render_template('error.html'), 404
