@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h1>Current Betting Status</h1>
+	<hr/>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Horse</th>
+				<th>Bettor</th>
+				<th>Amount</th>
+				<th>Bet Place</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for bet in bets %}
+			<tr>
+				<th>bet.horse</th>
+				<th>bet.person</th>
+				<th>bet.amount</th>
+				<th>bet.ago</th>
+			</tr>
+		{% endfor %}
+		</tbody>
+{% endblock %}

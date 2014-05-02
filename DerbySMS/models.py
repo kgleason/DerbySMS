@@ -42,6 +42,10 @@ class Horse(db.Model):
     @classmethod
     def find_by_nickname(cls, nname):
         return Horse.query.filter(Horse.shortname == nname).first()
+        
+    @classmethod
+    def get_top_bet_by_id(cls, id):
+        return Bet.query.filter(Bet.horse == h.id).order_by(Bet.id.desc()).first()
             
 class Bet(db.Model):
     __tablename__ = 'bet_history'

@@ -5,6 +5,33 @@ import twilio.twiml
 
 admins = { "+18126069823" : "Kirk",}
 
+@app.route('/')
+def index():
+    cur_bets = []
+    display_name = ""
+    for h in Horse.query.all():
+        b = h.get_top_bet_by_id(h.id)
+        if b:
+            p = Person.query.filter(Person.id == b.person)
+            if p.firstname:
+                display_name = "{0} {1}".format(p.firstname, p.lastname)
+            else:
+                display_name = p.mobile
+                    
+            cur_bets.append({
+                "horse" : h.name,
+                "person" : display_name,
+                "amount" : b.amount,
+                "ago" : b.created_in_words})
+        else:
+            cur_bets.append({
+                "horse" : h.name,
+                "person" : "No one",
+                "amount" : "0",
+                "ago" : ""})
+            
+    return render_template('index.html', bets=b)
+    
 @app.route("/sms", methods=['GET', 'POST'])
 def inbound_sms():
     """
