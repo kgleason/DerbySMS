@@ -19,12 +19,14 @@ def index():
                 display_name = p.mobile
                     
             cur_bets.append({
+                "h_id" : h.id,
                 "horse" : h.name,
                 "person" : display_name,
                 "amount" : b.amount,
                 "ago" : b.created_in_words})
         else:
             cur_bets.append({
+                "h_id" : h.id,
                 "horse" : h.name,
                 "person" : "No one",
                 "amount" : "0",
@@ -32,6 +34,7 @@ def index():
             
     return render_template('index.html', bets=cur_bets)
     
+
 @app.route("/sms", methods=['GET', 'POST'])
 def inbound_sms():
     """
@@ -47,13 +50,40 @@ def inbound_sms():
     resp.message(message)
     return str(resp)
     
+
 @app.route('/horses')
 def horses():
     h = Horse.all()
     return render_template('horses.html', horses=h)
+
 @app.route('/people')
 def people():
     return render_template('people.html', people=Person.all())
+
+@app.route('/horse/<int:id>')
+def horse(id):
+    horse = Horse.query.filter(Horse.id == id).first()
+    bets = Bet.query.filter(Bet.horse == id).order_by(Bet.id.desc())
+    display_name = ""
+    horse_bets = []
+    if bets:
+        for bet in bets:
+            p = Person.query.filter(Person.id == bet.person).first()
+            if p.firstname:
+                display_name = "{0} {1}".format(p.firstname, p.lastname)
+            else:
+                display_name = p.mobile
+            
+            horse_bets.append({
+                "person" : display_name,
+                "amount" : bet.amount,
+                "ago" :  bet.created_in_words
+            })
+    else:
+        horse_bets = None
+    
+    return render_template('horse.html', horse=horse, bets=horse_bets)
+
 @app.errorhandler(404)
 def HTTPNotFound(e):
     return render_template('error.html'), 404

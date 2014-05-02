@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h1>Current Bets</h1>
+	<h3>Current Bets</h3>
 	<hr/>
 	<table class="table">
 		<thead>
@@ -14,7 +14,7 @@
 		<tbody>
 		{% for bet in bets %}
 			<tr>
-				<th>{{ bet.horse }}</th>
+				<th><a href="{{ url_for('horse', id=bet.h_id) }}">{{ bet.horse }}</a></th>
 				<th>{{ bet.person }}</th>
 				<th>${{ bet.amount }}</th>
 				<th>{{ bet.ago }} ago</th>

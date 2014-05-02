@@ -34,6 +34,7 @@ def process_sms(r):
     except KeyError, e:
         return "Unknown command. Please try again."
         
+
 def bet(person, txt):
     try:
         if not betting_running():
