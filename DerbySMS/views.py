@@ -12,7 +12,7 @@ def index():
     for h in Horse.query.all():
         b = h.get_top_bet_by_id(h.id)
         if b:
-            p = Person.query.filter(Person.id == b.person)
+            p = Person.query.filter(Person.id == b.person).first()
             if p.firstname:
                 display_name = "{0} {1}".format(p.firstname, p.lastname)
             else:
@@ -30,7 +30,7 @@ def index():
                 "amount" : "0",
                 "ago" : ""})
             
-    return render_template('index.html', bets=b)
+    return render_template('index.html', bets=cur_bets)
     
 @app.route("/sms", methods=['GET', 'POST'])
 def inbound_sms():
@@ -47,6 +47,13 @@ def inbound_sms():
     resp.message(message)
     return str(resp)
     
+@app.route('/horse')
+def horse():
+    h = Horse.all()
+    return render_template('horse.html', horses=h)
+@app.route('/person')
+def person():
+    pass
 @app.errorhandler(404)
 def HTTPNotFound(e):
     return render_template('error.html'), 404

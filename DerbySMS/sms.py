@@ -88,7 +88,7 @@ def status(person, txt):
     for h in Horse.query.all():
         horse_names.append(h.shortname)
         
-        b = Bet.query.filter(Bet.horse == h.id).order_by(Bet.id.desc()).first()
+        b = h.get_top_bet_by_id(h.id)
         if not b:
             # If there is no bet, then it means that this horse has no bets on it
             continue

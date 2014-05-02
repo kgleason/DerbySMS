@@ -7,20 +7,25 @@
 </head>
 <body>
 	<div class="container">
-		<div class="page-header">
-			<h1>Derby Party</h1>
-		</div>
 		<header>
-			<div class="navbar">
+		    <div class="navbar navbar-inverse navbar-static-top">
 				<div class="navbar-inner">
-					<ul class="nav">
-						<li><a href="{{ url_for('index') }}">Current Bets</a></li>
-						<li><a href="{{ url_for('horses') }}">Horses</a></li>
-						<li><a href="{{ url_for('people') }}">Gamblers</a></li>
-					</ul>
-				</div>
-			</div>
+					<div class="container">
+		               		<ul class="nav">
+								<li><a href="{{ url_for('index') }}">Current Bets</a></li>
+								<li><a href="{{ url_for('horse') }}">Horses</a></li>
+								<li><a href="{{ url_for('person') }}">Gamblers</a></li>
+		               	 	</ul>
+		           	</div>
+		         </div>
+		      </div>
 		</header>
+		<div class="container">
+		      <div class="blog-header">
+		        <h1 class="blog-title">Derby Party!!</h1>
+		        <p class="lead blog-description">Place a bet by texting your <a href="{{ url_for('horse') }}">horses shortname</a> to XXX-XXX-XXXX</p>
+		      </div>
+		  </div>
 		{% block content %}
 		
 		{% endblock %}

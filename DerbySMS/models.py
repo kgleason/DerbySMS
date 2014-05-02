@@ -36,6 +36,9 @@ class Horse(db.Model):
         return "<Horse ('%s','%s','%s')>" % (self.id, self.name, self.shortname)
     
     @classmethod
+    def all(cls):
+        return Horse.query.order_by(Horse.lane).all()
+    @classmethod
     def find_by_lane(cls, lane):
         return Horse.query.filter(Horse.lane == lane).first()
         
@@ -45,7 +48,11 @@ class Horse(db.Model):
         
     @classmethod
     def get_top_bet_by_id(cls, id):
-        return Bet.query.filter(Bet.horse == h.id).order_by(Bet.id.desc()).first()
+        return Bet.query.filter(Bet.horse == id).order_by(Bet.id.desc()).first()
+        
+    @classmethod
+    def get_top_bets(cls, id):
+        return db.session.query(Bet, Person).select_from(Bet).join(Person).filter(Bet.horse == id).filter(Person.id == Bet.person).order_by(Bet.id.desc()).first()
             
 class Bet(db.Model):
     __tablename__ = 'bet_history'
