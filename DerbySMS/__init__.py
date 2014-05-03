@@ -5,9 +5,13 @@ from flask.ext.migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../DerbySMS.sqlite3'
+try:
+    app.config.from_envvar('DERBYSMS_CONFIG')
+    app.config['DEBUG'] = True
+except Exception, e:
+    pass
 
 db = SQLAlchemy()
-db.echo = True
 db.app = app
 db.init_app(app)
 
