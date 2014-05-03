@@ -131,7 +131,7 @@ def status(person, txt):
         return "I don't know what {0} is".format(word) 
     
 def horse(person, txt):
-    if Person.is_admin(person.id) == False:
+    if Person.is_admin(person.mobile) == False:
         return "You must be an administrator to change the horses."
     try:
         command = txt[0].lower()    
@@ -175,6 +175,10 @@ def change_betting_status(person, txt):
         on = False
     else:
         return "Not sure what to do with {0}".format(txt[0])
+
+    if person.is_admin(person.mobile) == False:
+        return "You must be an administrator to turn the betting {0}".format(txt[0])
+        
         
     status = BettingStatus.query.filter(BettingStatus.id == 1).first()
     

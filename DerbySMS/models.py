@@ -29,8 +29,9 @@ class Person(db.Model):
         return Person.query.filter(Person.mobile == mobile).first()
     
     @classmethod
-    def is_admin(cls, id):
-        a = Admin.query.filter(Admin.mobile == Person.mobile).filter(Person.id == id)
+    def is_admin(cls, mobile):
+        #a = Admin.query.filter(Admin.mobile == Person.mobile).filter(Person.id == cls.id)
+        a = Admin.query.filter(Admin.mobile == mobile).first()
         if a:
             return True
         else:
