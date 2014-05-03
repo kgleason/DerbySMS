@@ -5,11 +5,11 @@ from flask.ext.migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../DerbySMS.sqlite3'
+app.config['DEBUG'] = True
 try:
     app.config.from_envvar('DERBYSMS_CONFIG')
-    app.config['DEBUG'] = True
 except Exception, e:
-    pass
+    print "Unable to find environment variable. Loading default config."
 
 db = SQLAlchemy()
 db.app = app
