@@ -21,6 +21,7 @@ def index():
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
+                "hsn" : h.shortname,
                 "p_id" : p.id,
                 "person" : display_name,
                 "amount" : b.amount,
@@ -29,6 +30,7 @@ def index():
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
+                "hsn" : h.shortname,
                 "p_id" : "0",
                 "person" : "No one",
                 "amount" : "0",
