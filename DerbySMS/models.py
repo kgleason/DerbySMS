@@ -89,9 +89,31 @@ class Bet(db.Model):
     def __repr__(self):
         return "<Bet ('%s', '%s', '%s', '%s')>" % (self.id, self.amount, self.person, self.horse)
     
+    @classmethod
+    def all(cls):
+        return Bet.query.order_by(Bet.id.desc()).all()
+    
+    @classmethod    
+    def get_bettor(cls, id):
+        p = Person.query.filter(Person.id == id).first()
+        return p.display_name
+        
+    @classmethod
+    def get_horse(cls, id):
+        h = Horse.query.filter(Horse.id == id).first()
+        return h.name
+        
     @property
     def created_in_words(self):
         return time_ago_in_words(self.created)
+        
+    @property
+    def placed_by(self):
+        return self.get_bettor(self.person)
+        
+    @property
+    def placed_on(self):
+        return self.get_horse(self.horse)
         
 class BettingStatus(db.Model):
     __tablename__ = 'betting_status'

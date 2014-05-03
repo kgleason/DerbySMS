@@ -35,7 +35,6 @@ def index():
                 "ago" : "Never"})
             
     return render_template('index.html', bets=cur_bets)
-    
 
 @app.route("/sms", methods=['GET', 'POST'])
 def inbound_sms():
@@ -51,7 +50,6 @@ def inbound_sms():
     resp = twilio.twiml.Response()
     resp.message(message)
     return str(resp)
-    
 
 @app.route('/horses')
 def horses():
@@ -62,6 +60,11 @@ def horses():
 def people():
     return render_template('people.html', people=Person.all())
 
+
+@app.route('/bets')
+def bets():
+    return render_template('bets.html', bets=Bet.all())
+    
 @app.route('/help')
 def help():
     return render_template('help.html')
@@ -85,7 +88,7 @@ def person(id):
         person_bets = None
         
     return render_template('person.html', person=person, bets=person_bets)
-                 
+
 @app.route('/horse/<int:id>')
 def horse(id):
     horse = Horse.query.filter(Horse.id == id).first()
