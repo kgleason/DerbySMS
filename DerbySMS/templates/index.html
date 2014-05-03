@@ -15,7 +15,7 @@
 		{% for bet in bets %}
 			<tr>
 				<th><a href="{{ url_for('horse', id=bet.h_id) }}">{{ bet.horse }}</a></th>
-				<th>{{ bet.person }}</th>
+				<th><a href="{{ url_for('person', id=bet.p_id) }}">{{ bet.person }}</a></th>
 				<th>${{ bet.amount }}</th>
 				<th>{{ bet.ago }}</th>
 			</tr>

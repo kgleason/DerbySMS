@@ -28,14 +28,20 @@ class Person(db.Model):
     def find_by_mobile(cls, mobile):
         return Person.query.filter(Person.mobile == mobile).first()
     
-    @classmethod
-    def is_admin(cls, mobile):
-        #a = Admin.query.filter(Admin.mobile == Person.mobile).filter(Person.id == cls.id)
-        a = Admin.query.filter(Admin.mobile == mobile).first()
+    @property
+    def is_admin(self):
+        a = Admin.query.filter(Admin.mobile == self.mobile).first()
         if a:
             return True
         else:
             return False    
+            
+    @property
+    def display_name(self):
+        if self.firstname:
+            return "{0} {1}".format(self.firstname, self.lastname)
+        else:
+            return self.mobile
             
 class Admin(db.Model):
     __tablename__ = 'admins'

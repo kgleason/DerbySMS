@@ -21,6 +21,7 @@ def index():
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
+                "p_id" : p.id,
                 "person" : display_name,
                 "amount" : b.amount,
                 "ago" : "{0} ago".format(b.created_in_words)})
@@ -28,6 +29,7 @@ def index():
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
+                "p_id" : "0",
                 "person" : "No one",
                 "amount" : "0",
                 "ago" : "Never"})
@@ -63,6 +65,27 @@ def people():
 @app.route('/help')
 def help():
     return render_template('help.html')
+
+@app.route('/person/<int:id>')
+def person(id):
+    person = Person.query.filter(Person.id == id).first()
+    bets = Bet.query.filter(Bet.person == id).order_by(Bet.id.desc())
+        
+    person_bets = []
+    if bets:
+        for bet in bets:
+            h = Horse.query.filter(Horse.id == bet.horse).first()
+            
+            person_bets.append({
+                "amount" : bet.amount,
+                "horse" : h.name,
+                "ago" : "{0} ago".format(bet.created_in_words)
+            })
+    else:
+        person_bets = None
+        
+    return render_template('person.html', person=person, bets=person_bets)
+                 
 @app.route('/horse/<int:id>')
 def horse(id):
     horse = Horse.query.filter(Horse.id == id).first()
@@ -72,15 +95,11 @@ def horse(id):
     if bets:
         for bet in bets:
             p = Person.query.filter(Person.id == bet.person).first()
-            if p.firstname:
-                display_name = "{0} {1}".format(p.firstname, p.lastname)
-            else:
-                display_name = p.mobile
             
             horse_bets.append({
-                "person" : display_name,
+                "person" : p.display_name,
                 "amount" : bet.amount,
-                "ago" :  bet.created_in_words
+                "ago" :  "{0} ago".format(bet.created_in_words)
             })
     else:
         horse_bets = None

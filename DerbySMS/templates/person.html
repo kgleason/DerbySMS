@@ -1,20 +1,20 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h3>Betting History for {{ horse.name }} ({{ horse.shortname }})</h3>
+	<h3>Betting History for {{ person.display_name }}</h3>
 	<hr/>
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Amount</th>
-				<th>Person</th>
+				<th>Horse</th>
 				<th>Bet placed</th>
 			</tr>
 		</thead>
 		<tbody>
 		{% for b in bets %}
 			<tr>
-				<th>{{ b.person }}</th>
 				<th>${{ b.amount }}</th>
+				<th>{{ b.horse }}</th>
 				<th>{{ b.ago }}</th>
 			</tr>
 		{% endfor %}
