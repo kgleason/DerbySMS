@@ -1,15 +1,26 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h3>Help</h3>
+
+    <h3>Available commands</h3>
 	<hr/>
-	<em><strong>Here is a list of commands that you can text in order to play along.</br>
-	Where you see words like {firstname}, you should put in a value for firstname, and drop the {}</br></br></strong></em>
-	
+    <h4><em>Anything inside</em> { } <em>will need to be replaced with an actual value. You don't need the</em> { }</h4><br/>
 	<ul>
-		<li>Set your name: name {firstname} {lastname}</li>
-		<li>Place a bet: bet {shortname} {amount}  (for example "bet h1 20")</li>
-		<li>Get your status: status</li>
-		<li>Get the status of a horse: status {shortname} </li>
-	</ul>
-	
+    	<li>Place a bet: <strong>bet {shortname} {amount}</strong></li>
+      	<ul><li>example: <strong>bet sn 13</strong></li></ul>
+    <li>Get your current status in the betting: <strong>status</strong></li>
+    <li>Get the status of a horse: <strong>status {shortname}</strong></li>
+      <ul><li>example: <strong>status sn</strong></li></ul>
+    <li>Set up your name: <strong>name {firstname} {lastname}</strong></li>
+      <ul><li>example: <strong>name Jesse Duke</strong></li></ul>
+  	</ul>
+    <hr/>
+    <h4><em>If you've been set up in the system as an admin, then the following commands are also available to you. Go ahead an try one. It will tell you if you are an admin or not.</em></h4><br/>
+	<ul>
+    <li>Add a new horse: <strong>horse add {post position} {shortname} {longname}</strong></li>
+      <ul><li>example: <strong>horse add 1 lh Lulu Hogg</strong></li></ul>
+    <li>Modify an existing horse: <strong>horse mod {post position} {shortname} {longname}</strong></li>
+      <ul><li>example: <strong>horse mod 1 llh Lulu Hogg</strong></li></ul>
+    <li>Turn the bidding on: <strong>turn on</strong></li>
+    <li>Turn the bidding off: <strong>turn off</strong></li>
+</ul>
 {% endblock %}
