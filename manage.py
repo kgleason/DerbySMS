@@ -7,11 +7,8 @@ manager.add_command('db', MigrateCommand)
 
 app.debug = True
 
-try:
-    if not TwilioConfig.query.all():
-        print "There is no twilio config in the database. Please add your account_sid and auth_token into the database."
-        exit()
-except ProgrammingError, e:
-    print "Unable to read Twilio Config table. Assuming database is not initialzed."
+if not TwilioConfig.query.all():
+    print "There is no twilio config in the database. Please add your account_sid and auth_token into the database."
+    exit()
 
 manager.run()
