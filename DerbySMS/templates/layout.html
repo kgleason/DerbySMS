@@ -22,14 +22,14 @@
 			                    <span class="icon-bar"></span>
 			                    <span class="icon-bar"></span>
 			                </button>
-			                <a class="navbar-brand" href="{{ url_for('index') }}">Current Bets</a>
+			                <a class="navbar-brand" href="{{ url_for('index') }}">Current Bids</a>
 			            </div>
 			            <!-- Collect the nav links, forms, and other content for toggling -->
 			            <div class="collapse navbar-collapse" id="navbarCollapse">
 			                <ul class="nav navbar-nav">
 			                    <li><a href="{{ url_for('horses') }}">Horses</a></li>
 			                    <li><a href="{{ url_for('people') }}">Gamblers</a></li>
-								<li><a href="{{ url_for('bets') }}">All Bets</a></li>
+								<li><a href="{{ url_for('bets') }}">All Bids</a></li>
 								<li class="divider-vertical"></li>
 			                    <li><a href="{{ url_for('help') }}">Help</a></li>
 			                </ul>
@@ -40,7 +40,7 @@
 		<div class="container">
 		      <div class="blog-header">
 		        <h1 class="blog-title">Derby Party!!</h1>
-		        <p class="lead blog-description">Place a bet by finding your <a href="{{ url_for('horses') }}">horse's shortname</a> and texting 'bet shortname amount' to 812-558-5422</p>
+		        <p class="lead blog-description">Place a bid by finding your <a href="{{ url_for('horses') }}">horse's shortname</a> and texting 'bid shortname amount' to 812-558-5422</p>
 		      </div>
 		  </div>
 		{% block content %}

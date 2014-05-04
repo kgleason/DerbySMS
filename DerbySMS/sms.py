@@ -39,7 +39,7 @@ def process_sms(r):
 def bet(person, txt):
     try:
         if not betting_running():
-            return "I'm sorry. Betting is currently disabled."
+            return "I'm sorry. Bidding is currently disabled."
             
         shortname = txt[0].lower()
         bet_amount = txt[1]
@@ -57,11 +57,11 @@ def bet(person, txt):
             bet = Bet(person=person.id, horse=horse.id, amount=int(bet_amount))
             db.session.add(bet)
             db.session.commit()
-            return "Got your bet on {0} for ${1}".format(horse.name,bet.amount)
+            return "Got your bid on {0} for ${1}".format(horse.name,bet.amount)
         else:
-            return "Sorry. Your bet on {0} must be greater than {1}".format(horse.name, high_bet.amount)
+            return "Sorry. Your bid on {0} must be greater than {1}".format(horse.name, high_bet.amount)
     except IndexError, e:
-        return "Please try again with `bet shortname amount`\nBoth shortname and amount are required."
+        return "Please try again with `bid shortname amount`\nBoth shortname and amount are required."
 
 def intro(person, txt):
     try:
@@ -108,7 +108,7 @@ def status(person, txt):
         #return "Status by person"
         if person.id in bets_by_person:
             #return str(bets_by_person[person.id])
-            message = "You are currently the high bettor with "
+            message = "You are currently the high bidder with "
             for l in bets_by_person[person.id]:
                 #l should be a list
                 tmp_horse = l[0]
@@ -116,7 +116,7 @@ def status(person, txt):
                 message += "\n{0} for {1}".format(tmp_bet.amount, tmp_horse.name)
             return message
         else:
-            return "You are not currently the high bettor for any horses"
+            return "You are not currently the high bidder for any horses"
         
     elif word in horse_names:
         if word in bets_by_horse:
@@ -127,7 +127,7 @@ def status(person, txt):
             
             return "{0} {1} has ${2} on {3}".format(fname, lname, bamount, hname)
         else:
-            return "No one has submitted any bets for {0}".format(word)
+            return "No one has submitted any bids for {0}".format(word)
     else:
         return "I don't know what {0} is".format(word) 
     
@@ -178,7 +178,7 @@ def change_betting_status(person, txt):
         return "Not sure what to do with {0}".format(txt[0])
 
     if not person.is_admin:
-        return "You must be an administrator to turn the betting {0}".format(txt[0])
+        return "You must be an administrator to turn the bidding {0}".format(txt[0])
         
         
     status = BettingStatus.query.filter(BettingStatus.id == 1).first()
@@ -187,15 +187,15 @@ def change_betting_status(person, txt):
         status = BettingStatus(running=on)
         db.session.add(status)
         db.session.commit()
-        return "The betting has been turned {0}".format(txt[0])
+        return "The bidding has been turned {0}".format(txt[0])
         
     if status.running == on:
-        return "The betting is already {0}".format(txt[0])
+        return "The bidding is already {0}".format(txt[0])
     else:
         status.running = on
         db.session.add(status)
         db.session.commit()
-        return "The betting has been turned {0}".format(txt[0])
+        return "The bidding has been turned {0}".format(txt[0])
         
 def send_sms(person, message):
     tc = TwilioConfig.query.filter(TwilioConfig.id == 1).first()
