@@ -23,6 +23,7 @@ def process_sms(r):
     command = words[0].lower()
     options = {
         "bet" : bet,
+        "bid" : bet,
         "name" : intro,
         "status" : status,
         "horse" : horse,
@@ -135,7 +136,7 @@ def horse(person, txt):
         return "You must be an administrator to change the horses."
     try:
         command = txt[0].lower()    
-        if command == 'add':
+        if command == 'add' or command == 'new':
             # To add, we need the horses lane, their shortname, and their full name.
             if len(txt[1:]) < 3:
                 return "In order to add a horse, you need to use the command as follows\nhorse add lane# nickname full name"
