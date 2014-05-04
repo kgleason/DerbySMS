@@ -1,5 +1,5 @@
 #Derby SMS
-This was written as an experiment to replace a paper based bidding system at a party. The main development happens at [BitBucket](https://bitbucket.org/kgleason/derbysms), which is where I track my issues. The code is also posted to [GitHub]() as a convenience, but the issues are tracked at [BitBucket](https://bitbucket.org/kgleason/derbysms/issues?status=new&status=open).
+This was written as an experiment to replace a paper based bidding system at a party. The main development happens at [BitBucket](https://bitbucket.org/kgleason/derbysms), which is where I track my issues. The code is also posted to [GitHub](https://github.com/kgleason/DerbySMS) as a convenience, but the issues are tracked at [BitBucket](https://bitbucket.org/kgleason/derbysms/issues?status=new&status=open).
 
 ##The rules
 
