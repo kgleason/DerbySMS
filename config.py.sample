@@ -1,0 +1,22 @@
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+"""
+SQLITE_DB_FILE is the path of the SQLITE database. By default, it will be in the same
+directory as this config file, and it will be named db.sqlite. Override as you will.
+"""
+SQLITE_DB_FILE = 'sqlite:///{}'.format(os.path.join(basedir,'db.sqlite'))
+
+"""
+TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN are used to authenticate to Twilio.
+You should be able to get these values from https://www.twilio.com/user/account/voice-messaging
+"""
+TWILIO_ACCOUNT_SID = 'SIDSIDSIDSIDSIDSIDSID'
+TWILIO_AUTH_TOKEN = 'TOKTOKTOKTOKTOKTOKTOKTOK'
+
+"""
+from_number is the number that will show up on as your caller id on the recipients phone.
+This must be a number that has been validated with Twilio.
+Someday this may become a command line parameter.
+"""
+from_number = "+1AAAXXXNNNN"

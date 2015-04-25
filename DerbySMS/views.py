@@ -1,4 +1,4 @@
-from models import *
+from DerbySMS.models import *
 from flask import render_template, request, session, url_for, redirect
 from DerbySMS import app, db, sms
 import twilio.twiml
@@ -17,7 +17,7 @@ def index():
                 display_name = "{0} {1}".format(p.firstname, p.lastname)
             else:
                 display_name = p.mobile
-                    
+
             cur_bets.append({
                 "h_id" : h.id,
                 "horse" : h.name,
@@ -35,7 +35,7 @@ def index():
                 "person" : "No one",
                 "amount" : "0",
                 "ago" : "Never"})
-            
+
     return render_template('index.html', bets=cur_bets)
 
 @app.route("/sms", methods=['GET', 'POST'])
@@ -43,12 +43,12 @@ def inbound_sms():
     """
     Respond to SMS
     """
-    
+
     if request.method == "POST":
         message = sms.process_sms(r=request)
     else:
         message = "Sorry, but HTTP {0} is not currently allowed.".format(request.method)
-    
+
     resp = twilio.twiml.Response()
     resp.message(message)
     return str(resp)
@@ -66,7 +66,7 @@ def people():
 @app.route('/bets')
 def bets():
     return render_template('bets.html', bets=Bet.all())
-    
+
 @app.route('/help')
 def help():
     return render_template('help.html')
@@ -75,12 +75,12 @@ def help():
 def person(id):
     person = Person.query.filter(Person.id == id).first()
     bets = Bet.query.filter(Bet.person == id).order_by(Bet.id.desc())
-        
+
     person_bets = []
     if bets:
         for bet in bets:
             h = Horse.query.filter(Horse.id == bet.horse).first()
-            
+
             person_bets.append({
                 "amount" : bet.amount,
                 "horse" : h.name,
@@ -88,7 +88,7 @@ def person(id):
             })
     else:
         person_bets = None
-        
+
     return render_template('person.html', person=person, bets=person_bets)
 
 @app.route('/horse/<int:id>')
@@ -100,7 +100,7 @@ def horse(id):
     if bets:
         for bet in bets:
             p = Person.query.filter(Person.id == bet.person).first()
-            
+
             horse_bets.append({
                 "person" : p.display_name,
                 "amount" : bet.amount,
@@ -108,7 +108,7 @@ def horse(id):
             })
     else:
         horse_bets = None
-    
+
     return render_template('horse.html', horse=horse, bets=horse_bets)
 
 @app.errorhandler(404)

@@ -55,7 +55,11 @@ docs/_build/
 
 # SQLite
 *.sqlite[123]
+*.sqlite
 *.db
 include
 
 pip*.json
+
+pyvenv.cfg
+config.py

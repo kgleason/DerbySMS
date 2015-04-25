@@ -2,14 +2,11 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate
+import config
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../DerbySMS.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_DB_FILE
 app.config['DEBUG'] = True
-try:
-    app.config.from_envvar('DERBYSMS_CONFIG')
-except Exception, e:
-    print "Unable to find environment variable. Loading default config."
 
 db = SQLAlchemy()
 db.app = app
