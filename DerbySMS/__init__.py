@@ -7,6 +7,7 @@ import config
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_DB_FILE
 app.config['DEBUG'] = True
+app.config.from_number = config.FROM_NUMBER
 
 db = SQLAlchemy()
 db.app = app
