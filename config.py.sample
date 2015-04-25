@@ -19,4 +19,4 @@ from_number is the number that will show up on as your caller id on the recipien
 This must be a number that has been validated with Twilio.
 Someday this may become a command line parameter.
 """
-from_number = "+1AAAXXXNNNN"
+FROM_NUMBER = "+1AAAXXXNNNN"
