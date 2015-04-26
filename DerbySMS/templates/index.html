@@ -2,7 +2,9 @@
 {% block content %}
 	<h3>Current Bids</h3>
 	<hr/>
-	<table class="table">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='js/custom.js') }}"></script>
+	<table class="table" id="curBetsTable" name="curBetsTable">
 		<thead>
 			<tr>
 				<th>Horse</th>
@@ -14,10 +16,10 @@
 		<tbody>
 		{% for bet in bets %}
 			<tr>
-				<th><a href="{{ url_for('horse', id=bet.h_id) }}">{{ bet.horse }} ({{ bet.hsn }})</a></th>
-				<th><a href="{{ url_for('person', id=bet.p_id) }}">{{ bet.person }}</a></th>
-				<th>${{ bet.amount }}</th>
-				<th>{{ bet.ago }}</th>
+				<td><a href="{{ url_for('horse', id=bet.h_id) }}">{{ bet.horse }} ({{ bet.hsn }})</a></td>
+				<td class="sync" name="person{{ bet.h_id }}" id="person{{ bet.h_id }}">{{ bet.person }}</td>
+				<td class="sync" name="bet{{ bet.h_id }}" id="bet{{ bet.h_id }}">${{ bet.amount }}</td>
+				<td class="sync" name="ago{{ bet.h_id }}" id="ago{{ bet.h_id }}">{{ bet.ago }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
