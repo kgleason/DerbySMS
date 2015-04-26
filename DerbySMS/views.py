@@ -1,7 +1,9 @@
 from DerbySMS.models import *
 from flask import render_template, request, session, url_for, redirect
-from DerbySMS import app, db, sms
+from DerbySMS import app, db, sms, socketio
 import twilio.twiml
+from flask.ext.socketio import emit
+import json
 
 admins = { "+18126069823" : "Kirk",}
 
@@ -9,7 +11,7 @@ admins = { "+18126069823" : "Kirk",}
 def index():
     cur_bets = []
     display_name = ""
-    for h in Horse.query.all():
+    for h in Horse.all():
         b = h.get_top_bet_by_id(h.id)
         if b:
             p = Person.query.filter(Person.id == b.person).first()
@@ -114,3 +116,19 @@ def horse(id):
 @app.errorhandler(404)
 def HTTPNotFound(e):
     return render_template('error.html'), 404
+
+@socketio.on('connect')
+def log_connect(message):
+    print(message)
+
+@socketio.on('value changed')
+def value_changed(message):
+    print(message)
+    emit('update value', message, broadcast=True)
+
+def update_bet(message):
+    print(message)
+    socketio.emit('update bet', json.dumps(message))
+
+def insert_row(message):
+    socketio.emit('insert row', json.dumps(message))

@@ -1,5 +1,6 @@
 from DerbySMS.models import *
 from DerbySMS import db
+import views
 
 def AddHorse(lane, nickname, fullname):
     h = Horse.find_by_lane(lane)
@@ -10,6 +11,12 @@ def AddHorse(lane, nickname, fullname):
             h = Horse(name=fullname, shortname=nickname.lower(), lane=lane)
             db.session.add(h)
             db.session.commit()
+
+            views.insert_row ({
+                'horse_name' : h.name,
+                'horse_nickname' : h.shortname,
+                'id' : h.id
+            })
 
             return "Added {0} as {1} to lane {2}".format(h.name, h.shortname, h.lane)
         else:

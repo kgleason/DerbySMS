@@ -3,6 +3,7 @@ from DerbySMS import db, config
 from DerbySMS.horse import *
 import re
 from twilio.rest import TwilioRestClient
+import views
 
 def process_sms(r):
     from_number = str(r.values.get('From', None))
@@ -57,6 +58,15 @@ def bet(person, txt):
             bet = Bet(person=person.id, horse=horse.id, amount=int(bet_amount))
             db.session.add(bet)
             db.session.commit()
+
+            #Send data to the socketIO to update the page
+            views.update_bet({
+                'horse_id' : bet.horse,
+                'bettor' : bet.placed_by,
+                'amount' : bet.amount,
+                'ago' : bet.created_in_words
+            })
+
             return "Got your bid on {0} for ${1}".format(horse.name,bet.amount)
         else:
             return "Sorry. Your bid on {0} must be greater than {1}".format(horse.name, high_bet.amount)
