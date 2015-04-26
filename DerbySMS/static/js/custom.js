@@ -20,7 +20,7 @@ $(document).ready(function(){
 
     $('td#person'+data.horse_id).html(data.bettor);
     $('td#bet'+data.horse_id).html(data.amount);
-    $('td#ago'+data.horse_id).html(data.ago);
+    $('td#ago'+data.horse_id).html('$' + data.ago);
   });
 
   socket.on('insert row', function(msg) {
